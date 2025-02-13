@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>VIET NAM TRAVELER</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="../public/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../public/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../public/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../public/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-light pt-3 d-none d-lg-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+                    <div class="d-inline-flex align-items-center">
+                        <p style="font-weight: 700;">
+                            <i class="fa fa-phone-alt mr-2"></i>+84 968 1199 57
+                        </p>
+                        <a class="btn btn-primary py-1 px-2" href="/lien-he"
+                            style="margin-top: -15px;margin-left: 20px;">Liên hệ ngay</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center text-lg-right">
+                    <div class="d-inline-flex align-items-center">
+                        <a class="text-primary px-3" href="/account"> <i class="fa fa-user"></i>
+                        </a> <a class="text-primary px-3" href="/logout"
+                            onclick="return confirm('Bạn có chắc chắn đăng xuất');"> <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative nav-bar p-0">
+        <div class="container-lg position-relative p-0 px-lg-3" style="z-index: 9;">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light shadow-lg py-3 py-lg-0 pl-3 pl-lg-5"
+                style="border-radius: 25px;">
+                <a href="/" class="navbar-brand">
+                    <h1 class="m-0 text-primary">
+                        <img src="https://i.pinimg.com/originals/95/b2/2f/95b22f2e0059265d3d9cdb0cce0a4a27.png"
+                            alt="Image" style="width: 117px;height: 74px;margin-left: 25px;">
+                    </h1>
+                </a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto py-0">
+                        <a href="/" class="nav-item nav-link active">Trang chủ</a> <a href="/tour/trong-nuoc"
+                            class="nav-item nav-link">Tour trong
+                            nước</a> <a href="/tour/ngoai-nuoc" class="nav-item nav-link">Tour
+                            ngoài nước</a> <a href="/tin-tuc" class="nav-item nav-link">Tin
+                            tức</a> <a href="/lien-he" class="nav-item nav-link">Liên hệ</a> <a href="/account"
+                            class="nav-item nav-link">Tài khoản</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Contact Start -->
+    <div class="momo-payment">
+        <div class="momo-detail-background">
+            <div class="momo-detail">
+                <div class="timeout">
+                    <h3>Đơn hoàng sẽ hết hạn sau:</h3>
+                    <div class="time">10 : 00</div>
+                </div>
+                <div class="supplier">
+                    <h3>Nhà cung cấp:</h3>
+                    <p>MoMo Payment</p>
+                </div>
+                <div class="price">
+                    <h3>Số tiền</h3>
+                    <p th:text="${#numbers.formatInteger(tong_tien, 3, 'POINT')} + ' VNĐ'"></p>
+                </div>
+                <div class="detail">
+                    <h3>Thông tin</h3>
+                    <p>Việt Nam Tour</p>
+                    <p>(vietnamtour@hutech.com) pays order #0044</p>
+                </div>
+                <div class="idproduct">
+                    <h3>Đơn hàng</h3>
+                    <p>S030203202-<span th:text="${tour.id}"></span></p>
+                </div>
+                <div class="back-button">
+                    <a href="/">
+                        Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="momo-qr">
+            <div class="momo-qr-content">
+                <p class="header">Quét mã để thanh toán</p>
+                <img src="/public/img/QR_Payment_MoMo.jpg" alt="Momo">
+                <p class="decs">
+                    Sử dụng App MoMo hoặc ứng dụng Camera hỗ trợ QR code để quét mã.
+                </p>
+                <p class="loading">
+                    Đang chờ quét mã ...
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-6 mb-5">
+                <a href="" class="navbar-brand">
+                    <h1 class="text-primary">
+                        <span class="text-white">VIET NAM</span> TOUR
+                    </h1>
+                </a>
+                <p>Công ty dịch vụ du lịch và vận chuyển VIỆT NAM TOUR</p>
+                <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Theo dõi chúng tôi</h6>
+                <div class="d-flex justify-content-start">
+                    <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a> <a
+                        class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-5">
+                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Dịch vụ của chúng tôi</h5>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Về chúng tôi</a> <a
+                        class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Đặt tour</a> <a
+                        class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Liên hệ</a> <a
+                        class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Tin tức</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-5">
+                <h5 class="text-white text-uppercase mb-4" style="letter-spacing: 5px;">Liên hệ với chúng tôi</h5>
+                <p>
+                    <i class="fa fa-map-marker-alt mr-2"></i>10/80c Song Hành Xa Lộ Hà Nội, Phường Tân Phú, Quận 9, Hồ
+                    Chí Minh
+                </p>
+                <p>
+                    <i class="fa fa-phone-alt mr-2"></i>+84 968 1199 57
+                </p>
+                <p>
+                    <i class="fa fa-envelope mr-2"></i>vietnamtour@hutech.com
+                </p>
+                <h6 class="text-white text-uppercase mt-4 mb-3" style="letter-spacing: 5px;">Bản Tin</h6>
+                <div class="w-100">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-light" style="padding: 25px;"
+                            placeholder="Email của bạn">
+                        <div class="input-group-append" style="margin: 0px 15px;">
+                            <button class="btn btn-primary px-3">Đăng ký</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer End -->
+
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top" style="border-radius:50%"><i
+            class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="../public/js/boostrap-bundle.min.js"></script>
+    <script src="../public/js/jquery.js"></script>
+    <script src="../public/lib/easing/easing.min.js"></script>
+    <script src="../public/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../public/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../public/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../public/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="../public/mail/jqBootstrapValidation.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../public/js/main.js"></script>
+    <script>
+        var thoigianbatdau = 10; // Thời gian bắt đầu tính bằng phút
+        var sogiay = thoigianbatdau * 60; // Chuyển đổi thành giây
+        var itemCoutDown = document.querySelector('.time');
+
+        // Hàm để định dạng số thành dạng 2 chữ số (ví dụ: 1 -> 01)
+        function formatTime(number) {
+            return number < 10 ? '0' + number : number;
+        }
+
+        var countdown = setInterval(function () {
+            let giay = sogiay % 60; // Lấy phần giây
+            let phut = Math.floor(sogiay / 60); // Lấy phần phút
+
+            // Cập nhật nội dung hiển thị với định dạng 00:00
+            itemCoutDown.innerHTML = `${formatTime(phut)} : ${formatTime(giay)}`;
+
+            sogiay--; // Giảm số giây còn lại
+
+            // Dừng đồng hồ nếu hết thời gian
+            if (sogiay < 0) {
+                clearInterval(countdown);
+                itemCoutDown.innerHTML = "Hết giờ";
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>

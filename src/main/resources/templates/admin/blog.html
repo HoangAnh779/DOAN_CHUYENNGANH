@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Quản lý tin tức</title>
+    <link rel="stylesheet" href="/public/admin/css/fontawesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/admin/css/datatables.min.css" />
+    <link href="/public/admin/css/styles.css" rel="stylesheet" />
+    <script src="/public/admin/js/moment.min.js"></script>
+    <style>
+        label {
+            padding: 10px 0;
+        }
+
+        table.dataTable tbody td:last-child {
+            text-align: center;
+        }
+
+        table.dataTable tbody td:last-child button {
+            margin: 4px;
+        }
+
+        .dataTables_wrapper td {
+            font-size: 13px;
+        }
+
+        .dataTables_wrapper thead th {
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html">Quản lý tin tức</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..."
+                    aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="/admin/home" style="font-size: 25px;">
+                            <img src="https://i.pinimg.com/736x/95/b2/2f/95b22f2e0059265d3d9cdb0cce0a4a27.jpg"
+                                alt="Image" style="width: 60px; height: 40px;border-radius: 50%;margin-right: 10px;">
+                            Trang chủ
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Trang quản lý</div>
+                        <a class="nav-link" href="/admin/user">
+                            <div class="sb-nav-link-icon"><i class="nav-icon fas fa-users"></i></div>
+                            Quản lý người dùng
+                        </a>
+                        <a class="nav-link collapsed" href="/admin/tin tức" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="nav-icon fas fa-ticket-alt"></i></div>
+                            Quản lý tour
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="/admin/tour"> <i class="far fa-circle nav-icon"></i> Danh sách
+                                    tour</a>
+                                <a class="nav-link" href="/admin/tourin"> <i class="far fa-circle nav-icon"></i> Tour
+                                    trong nước</a>
+                                <a class="nav-link" href="/admin/tourout"> <i class="far fa-circle nav-icon"></i> Tour
+                                    tức nước ngoài</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link" href="/admin/booking">
+                            <div class="sb-nav-link-icon"><i class="nav-icon fas fa-bookmark"></i></div>
+                            Quản lý booking
+                        </a>
+                        <a class="nav-link" href="/admin/blog">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Quản lý tin tức
+                        </a>
+                        <a class="nav-link" href="/admin/statistical">
+                            <div class="sb-nav-link-icon"><i class="nav-icon fas fa-signal"></i></div>
+                            Thống kê
+                        </a>
+                        <a class="nav-link" href="/admin/logout">
+                            <div class="sb-nav-link-icon"><i class="nav-icon fas fa-sign-out-alt"></i></div>
+                            Đăng xuất
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    Admin
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Danh sách tin tức</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="/admin/tintuc">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Quản lý tin tức</li>
+                    </ol>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i> Bảng dữ liệu tin tức
+                        </div>
+                        <div class="m-4">
+                            <button class="btn btn-primary" onclick="openAddModal()">Thêm mới tin tức</button>
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Ngày đăng</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Tóm tắt</th>
+                                        <th>Nội dung</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Nội dung sẽ được JavaScript cập nhật -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Modal Xóa Tin Tức -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Xóa tin tức</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Bạn có chắc chắn muốn xóa tin tức này?</p>
+                                    <input type="hidden" id="deleteId">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                    <button type="button" class="btn btn-danger" onclick="deleteTinTuc()">Xóa</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Thêm Tin Tức -->
+                    <div class="modal fade" id="addModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Thêm mới tin tức</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addTinTucForm">
+                                        <div class="form-group">
+                                            <label for="addTieuDe">Tiêu đề</label>
+                                            <input type="text" class="form-control" id="addTieuDe" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="noi_dung_add">Nội dung</label>
+                                            <textarea class="form-control" id="noi_dung_add" rows="5"
+                                                required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="addNgayDang">Ngày đăng</label>
+                                            <input type="date" class="form-control" id="addNgayDang" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="addTomTat">Tóm tắt</label>
+                                            <input type="text" class="form-control" id="addTomTat" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="hinh_anh_add">Ảnh tin tức</label>
+                                            <input type="file" class="form-control-file" id="hinh_anh_add"
+                                                onchange="previewImage('addPreview')">
+                                            <img id="addPreview" style="max-width: 100%; margin-top: 10px;">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-primary" onclick="submitAddForm()">Thêm
+                                        mới</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Sửa Tin Tức -->
+                    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Sửa tin tức</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editForm">
+                                        <input type="hidden" id="editId">
+                                        <div class="form-group">
+                                            <label for="editTieuDe">Tiêu đề</label>
+                                            <input type="text" class="form-control" id="editTieuDe" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="noi_dung">Nội dung</label>
+                                            <textarea class="form-control" id="noi_dung" rows="5" required></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editNgayDang">Ngày đăng</label>
+                                            <input type="date" class="form-control" id="editNgayDang" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="editTomTat">Tóm tắt</label>
+                                            <input type="text" class="form-control" id="editTomTat" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="hinh_anh">Ảnh tin tức</label>
+                                            <input type="file" class="form-control-file" id="hinh_anh"
+                                                onchange="previewImage('editPreview')">
+                                            <img id="editPreview" style="max-width: 100%; margin-top: 10px;">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="submitEditForm()">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="/public/admin/js/jquery.js"></script>
+    <script src="/public/admin/js/boostrap-bundle.min.js"></script>
+    <script src="/public/admin/js/scripts.js"></script>
+    <script type="text/javascript" src="/public/admin/js/datatables.min.js"></script>
+    <script src="/public/admin/js/all.min.js"></script>
+    <script src="/public/admin/js/ckeditor.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let ckEditor, ckEditorAdd;
+            let inputFileChanged = false;
+
+            // Hàm khởi tạo CKEditor
+            const setupCKEditor = (selector) => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    return ClassicEditor.create(element).catch(error => {
+                        console.error(`CKEditor lỗi trên ${selector}:`, error);
+                    });
+                } else {
+                    console.warn(`Element "${selector}" không tồn tại!`);
+                    return null;
+                }
+            };
+
+            // Khởi tạo CKEditor
+            ckEditor = setupCKEditor('#noi_dung');
+            ckEditorAdd = setupCKEditor('#noi_dung_add');
+
+            // Hàm thiết lập sự kiện hiển thị hình ảnh
+            const setupImagePreview = (inputSelector, imgSelector) => {
+                const inputElement = document.querySelector(inputSelector);
+                if (inputElement) {
+                    inputElement.addEventListener("change", (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                                document.querySelector(imgSelector).src = event.target.result;
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                        if (inputSelector === "#hinh_anh") inputFileChanged = true;
+                    });
+                } else {
+                    console.warn(`Element "${inputSelector}" không tồn tại!`);
+                }
+            };
+
+            // Thiết lập sự kiện cho hình ảnh
+            setupImagePreview("#hinh_anh", "#hinh_anh_view");
+            setupImagePreview("#hinh_anh_add", "#hinh_anh_view_add");
+
+            // Hàm gửi dữ liệu tin tức
+            const submitNewsForm = (url, method, formData, callback) => {
+                fetch(url, {
+                    method: method,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData),
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Lỗi, mã trạng thái: ${response.status}`);
+                        return response.json();
+                    })
+                    .then(data => callback(data))
+                    .catch(err => console.error("Lỗi khi gửi dữ liệu tin tức:", err));
+            };
+
+            // Thêm tin tức
+            const addTinTucForm = document.querySelector("#addTinTucForm");
+            if (addTinTucForm) {
+                addTinTucForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const formData = {
+                        tieu_de: document.querySelector('#addTieuDe').value,
+                        tom_tat: document.querySelector('#addTomTat').value,
+                        noi_dung: ckEditorAdd ? ckEditorAdd.getData() : "",
+                        ngay_dang: document.querySelector('#addNgayDang').value,
+                    };
+                    const image = document.querySelector("#hinh_anh_add").files[0];
+                    const formDataImage = new FormData();
+                    if (image) formDataImage.append("image", image);
+
+                    submitNewsForm("/api/tin_tuc/add", "POST", formData, (data) => {
+                        if (image) {
+                            fetch(`/api/tin_tuc/add/image/${data.id}`, {
+                                method: "POST",
+                                body: formDataImage,
+                            })
+                                .then(() => {
+                                    alert("Thêm tin tức thành công!");
+                                    location.reload();
+                                })
+                                .catch(err => console.error("Lỗi khi tải ảnh lên:", err));
+                        } else {
+                            alert("Thêm tin tức thành công!");
+                            location.reload();
+                        }
+                    });
+                });
+            }
+
+            // Sửa tin tức
+            window.editTinTuc = (id) => {
+                fetch(`/api/tin_tuc/${id}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Lỗi lấy tin tức, mã lỗi: ${response.status}`);
+                        return response.json();
+                    })
+                    .then(data => {
+                        const { tieu_de, tom_tat, noi_dung, hinh_anh, ngay_dang } = data;
+
+                        document.querySelector("#id").value = id;
+                        document.querySelector("#editTieuDe").value = tieu_de;
+                        document.querySelector("#editTomTat").value = tom_tat;
+                        if (ckEditor) ckEditor.setData(noi_dung);
+                        document.querySelector("#editNgayDang").value = new Date(ngay_dang).toISOString().split("T")[0];
+                        document.querySelector("#hinh_anh").src = `/public/img/${hinh_anh}`;
+
+                        const editModal = new bootstrap.Modal(document.getElementById("editTinTucModal"));
+                        editModal.show();
+                    })
+                    .catch(err => console.error("Lỗi lấy tin tức:", err));
+            };
+
+            const editTinTucForm = document.querySelector("#editForm");
+            if (editTinTucForm) {
+                editTinTucForm.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const id = document.querySelector("#id").value;
+                    const formData = {
+                        tieu_de: document.querySelector("#tieu_de").value,
+                        tom_tat: document.querySelector("#tom_tat").value,
+                        noi_dung: ckEditor ? ckEditor.getData() : "",
+                        ngay_dang: document.querySelector("#ngay_dang").value,
+                    };
+                    const image = document.querySelector("#hinh_anh").files[0];
+                    const formDataImage = new FormData();
+                    if (image) formDataImage.append("image", image);
+
+                    submitNewsForm(`/api/tin_tuc/update/${id}`, "PUT", formData, () => {
+                        if (inputFileChanged && image) {
+                            fetch(`/api/tin_tuc/update/image/${id}`, {
+                                method: "PUT",
+                                body: formDataImage,
+                            })
+                                .then(() => {
+                                    alert("Sửa tin tức thành công!");
+                                    location.reload();
+                                })
+                                .catch(err => console.error("Lỗi khi cập nhật ảnh:", err));
+                        } else {
+                            alert("Sửa tin tức thành công!");
+                            location.reload();
+                        }
+                    });
+                });
+            }
+
+            // Xóa tin tức
+            window.deleteTinTuc = (id) => {
+                if (confirm("Bạn có chắc chắn muốn xóa tin tức này?")) {
+                    fetch(`/api/tin_tuc/delete/${id}`, { method: "DELETE" })
+                        .then(() => {
+                            alert("Xóa tin tức thành công!");
+                            location.reload();
+                        })
+                        .catch(err => console.error("Lỗi khi xóa tin tức:", err));
+                }
+            };
+
+            // Khởi tạo DataTable
+            $('#datatablesSimple').DataTable({
+                ajax: {
+                    url: "/api/tin_tuc/getAllPage?pageIndex=0&pageSize=100",
+                    dataSrc: (json) => {
+                        console.log(json);  // In ra dữ liệu trả về từ API để kiểm tra
+                        if (!json || !json.data) {
+                            console.error("API trả về dữ liệu không hợp lệ:", json);
+                            return [];
+                        }
+                        return json.data;
+                    },
+                },
+                columns: [
+                    { data: "id" }, // Kiểm tra trong dữ liệu trả về xem có trường "id" không
+                    {
+                        "data": "ngay_dang",
+                        "render": function (data, type, row) {
+                            return data;
+                        }
+                    },
+                    { data: "tieu_de" }, // Kiểm tra trường "tieu_de"
+                    { data: "tom_tat" }, // Kiểm tra trường "tom_tat"
+                    { data: "noi_dung" },
+                    {
+                        data: null,
+                        render: (data) => `
+                    <button class="btn btn-primary btn-sm" onclick="editTinTuc(${data.id})">Sửa</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteTinTuc(${data.id})">Xóa</button>
+                `,
+                    },
+                ],
+                language: {
+                    emptyTable: "Không có dữ liệu hiển thị",
+                    loadingRecords: "Đang tải...",
+                    lengthMenu: "Hiển thị _MENU_ mục",
+                    search: "Tìm kiếm:",
+                    info: "Hiển thị _START_ đến _END_ của _TOTAL_ mục"
+                }
+            });
+
+
+            // Mở modal thêm tin tức
+            window.openAddModal = () => {
+                const addModal = new bootstrap.Modal(document.getElementById("addModal"));
+                addModal.show();
+
+                document.querySelector("#addTinTucForm").reset();
+                if (ckEditorAdd) ckEditorAdd.setData("");
+                document.querySelector("#hinh_anh_view_add").src = "";
+            };
+        });
+
+
+    </script>
+</body>
+
+</html>
