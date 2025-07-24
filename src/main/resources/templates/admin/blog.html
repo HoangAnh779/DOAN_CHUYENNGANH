@@ -124,7 +124,7 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Danh sách tin tức</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="/admin/tintuc">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="/admin/Blog">Trang chủ</a></li>
                         <li class="breadcrumb-item active">Quản lý tin tức</li>
                     </ol>
                     <div class="card mb-4">
@@ -167,7 +167,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                                    <button type="button" class="btn btn-danger" onclick="deleteTinTuc()">Xóa</button>
+                                    <button type="button" class="btn btn-danger" onclick="deleteBlog()">Xóa</button>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="addTinTucForm">
+                                    <form id="addBlogForm">
                                         <div class="form-group">
                                             <label for="addTieuDe">Tiêu đề</label>
                                             <input type="text" class="form-control" id="addTieuDe" required>
@@ -334,9 +334,9 @@
             };
 
             // Thêm tin tức
-            const addTinTucForm = document.querySelector("#addTinTucForm");
-            if (addTinTucForm) {
-                addTinTucForm.addEventListener("submit", (e) => {
+            const addBlogForm = document.querySelector("#addBlogForm");
+            if (addBlogForm) {
+                addBlogForm.addEventListener("submit", (e) => {
                     e.preventDefault();
                     const formData = {
                         tieu_de: document.querySelector('#addTieuDe').value,
@@ -368,7 +368,7 @@
             }
 
             // Sửa tin tức
-            window.editTinTuc = (id) => {
+            window.editBlog = (id) => {
                 fetch(`/api/tin_tuc/${id}`)
                     .then(response => {
                         if (!response.ok) throw new Error(`Lỗi lấy tin tức, mã lỗi: ${response.status}`);
@@ -384,15 +384,15 @@
                         document.querySelector("#editNgayDang").value = new Date(ngay_dang).toISOString().split("T")[0];
                         document.querySelector("#hinh_anh").src = `/public/img/${hinh_anh}`;
 
-                        const editModal = new bootstrap.Modal(document.getElementById("editTinTucModal"));
+                        const editModal = new bootstrap.Modal(document.getElementById("editBlogModal"));
                         editModal.show();
                     })
                     .catch(err => console.error("Lỗi lấy tin tức:", err));
             };
 
-            const editTinTucForm = document.querySelector("#editForm");
-            if (editTinTucForm) {
-                editTinTucForm.addEventListener("submit", (e) => {
+            const editBlogForm = document.querySelector("#editForm");
+            if (editBlogForm) {
+                editBlogForm.addEventListener("submit", (e) => {
                     e.preventDefault();
                     const id = document.querySelector("#id").value;
                     const formData = {
@@ -425,7 +425,7 @@
             }
 
             // Xóa tin tức
-            window.deleteTinTuc = (id) => {
+            window.deleteBlog = (id) => {
                 if (confirm("Bạn có chắc chắn muốn xóa tin tức này?")) {
                     fetch(`/api/tin_tuc/delete/${id}`, { method: "DELETE" })
                         .then(() => {
@@ -463,8 +463,8 @@
                     {
                         data: null,
                         render: (data) => `
-                    <button class="btn btn-primary btn-sm" onclick="editTinTuc(${data.id})">Sửa</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteTinTuc(${data.id})">Xóa</button>
+                    <button class="btn btn-primary btn-sm" onclick="editBlog(${data.id})">Sửa</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteBlog(${data.id})">Xóa</button>
                 `,
                     },
                 ],
@@ -483,7 +483,7 @@
                 const addModal = new bootstrap.Modal(document.getElementById("addModal"));
                 addModal.show();
 
-                document.querySelector("#addTinTucForm").reset();
+                document.querySelector("#addBlogForm").reset();
                 if (ckEditorAdd) ckEditorAdd.setData("");
                 document.querySelector("#hinh_anh_view_add").src = "";
             };

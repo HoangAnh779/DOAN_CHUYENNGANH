@@ -480,7 +480,7 @@ public class HomeController {
 
 	@GetMapping("/tin-tuc")
 	public String news() {
-		return "/user/tin-tuc";
+		return "/user/blog";
 	}
 
 	@GetMapping("/lien-he")

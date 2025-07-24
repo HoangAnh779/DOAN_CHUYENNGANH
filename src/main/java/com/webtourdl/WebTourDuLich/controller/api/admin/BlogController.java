@@ -2,8 +2,8 @@ package com.webtourdl.WebTourDuLich.controller.api.admin;
 
 
 import com.webtourdl.WebTourDuLich.dto.ResponseDTO;
-import com.webtourdl.WebTourDuLich.entity.TinTuc;
-import com.webtourdl.WebTourDuLich.service.TinTucService;
+import com.webtourdl.WebTourDuLich.entity.Blog;
+import com.webtourdl.WebTourDuLich.service.BlogService;
 import com.webtourdl.WebTourDuLich.utilities.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,30 +19,30 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/api/tin_tuc")
-public class TinTucController {
+public class BlogController {
 
     @Autowired
-    private TinTucService tinTucService;
+    private BlogService BlogService;
 
     // Lấy tất cả tin tức phân trang
     @GetMapping("/getAllPage")
     public ResponseDTO getAllPage(@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
                                   @RequestParam(value = "pageIndex", defaultValue = "0") Integer pageIndex) {
-        Page<TinTuc> page = this.tinTucService.getAllPage(PageRequest.of(pageIndex, pageSize));
+        Page<Blog> page = this.BlogService.getAllPage(PageRequest.of(pageIndex, pageSize));
         return new ResponseDTO("Thành Công", page.getContent());
     }
 
     // Lấy chi tiết tin tức theo ID
     @GetMapping("/{id}")
     public ResponseDTO getOnePage(@PathVariable("id") Long id) {
-        return new ResponseDTO("Thành công", this.tinTucService.findOnePage(id));
+        return new ResponseDTO("Thành công", this.BlogService.findOnePage(id));
     }
 
     // Thêm tin tức mới
     @PostMapping("/add")
-    public ResponseDTO addNewTinTuc(@RequestBody TinTuc tinTuc) {
-        TinTuc createdTinTuc = this.tinTucService.createOnePage(tinTuc);
-        return new ResponseDTO("Thành công", createdTinTuc);
+    public ResponseDTO addNewBlog(@RequestBody Blog Blog) {
+        Blog createdBlog = this.BlogService.createOnePage(Blog);
+        return new ResponseDTO("Thành công", createdBlog);
     }
 
     // Thêm ảnh tin tức
@@ -54,9 +54,9 @@ public class TinTucController {
             FileUploadUtil.saveFile(uploadDir, fileName, image);
 
             // Cập nhật đường dẫn ảnh
-            TinTuc tinTuc = this.tinTucService.findOnePage(id);
-            tinTuc.setHinh_anh(fileName);
-            this.tinTucService.updateTinTuc(tinTuc, id);
+            Blog Blog = this.BlogService.findOnePage(id);
+            Blog.setHinh_anh(fileName);
+            this.BlogService.updateBlog(Blog, id);
 
             return new ResponseDTO("Upload thành công", null);
         } catch (IOException e) {
@@ -67,9 +67,9 @@ public class TinTucController {
 
     // Cập nhật tin tức
     @PutMapping("/update/{id}")
-    public ResponseDTO updateOneTinTuc(@PathVariable("id") Long id, @RequestBody TinTuc tinTuc) {
-        TinTuc updatedTinTuc = this.tinTucService.updateTinTuc(tinTuc, id);
-        return new ResponseDTO("Cập nhật thành công", updatedTinTuc);
+    public ResponseDTO updateOneBlog(@PathVariable("id") Long id, @RequestBody Blog Blog) {
+        Blog updatedBlog = this.BlogService.updateBlog(Blog, id);
+        return new ResponseDTO("Cập nhật thành công", updatedBlog);
     }
 
     // Cập nhật ảnh tin tức
@@ -80,9 +80,9 @@ public class TinTucController {
             String fileName = image.getOriginalFilename();
             FileUploadUtil.saveFile(uploadDir, fileName, image);
 
-            TinTuc tinTuc = this.tinTucService.findOnePage(id);
-            tinTuc.setHinh_anh(fileName);
-            this.tinTucService.updateTinTuc(tinTuc, id);
+            Blog Blog = this.BlogService.findOnePage(id);
+            Blog.setHinh_anh(fileName);
+            this.BlogService.updateBlog(Blog, id);
 
             return new ResponseDTO("Cập nhật ảnh thành công", null);
         } catch (IOException e) {
@@ -93,9 +93,9 @@ public class TinTucController {
 
     // Xóa tin tức
     @DeleteMapping("/delete/{id}")
-    public ResponseDTO deleteOneTinTuc(@PathVariable("id") Long id) {
+    public ResponseDTO deleteOneBlog(@PathVariable("id") Long id) {
         try {
-            this.tinTucService.deleteOnePage(id);
+            this.BlogService.deleteOnePage(id);
             return new ResponseDTO("Xóa thành công", null);
         } catch (Exception e) {
             log.error("Lỗi xóa tin tức: {}", e.getMessage());
@@ -104,10 +104,10 @@ public class TinTucController {
     }
     // Đếm tin tức
     @GetMapping("/count")
-    public ResponseDTO getTinTucCount() {
-        long tinTucCount = tinTucService.countBlogs();
+    public ResponseDTO getBlogCount() {
+        long BlogCount = BlogService.countBlogs();
         Map<String, Long> response = new HashMap<>();
-        response.put("count", tinTucCount);
+        response.put("count", BlogCount);
         return new ResponseDTO("Thành công", response);
     }
 }
